@@ -3,7 +3,14 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
 import random
-'''
+
+# from https://stackoverflow.com/questions/1604464/twos-complement-in-python
+def twos_comp(val, bits):
+    """compute the 2's complement of int value val"""
+    if (val & (1 << (bits - 1))) != 0: # if sign bit is set e.g., 8bit: 128-255
+        val = val - (1 << bits)        # compute negative value
+    return val                         # return positive value as is
+
 @cocotb.test()
 async def test_perceptron(dut):
     """Test the perceptron module."""
@@ -36,11 +43,15 @@ async def test_perceptron(dut):
     
     # Compute expected output manually
     weights = [-1 if x == 0 else x for x in weights]
-    print(weights, inputs)
+    print(f"weights: {weights}, inputs: {inputs}")
     expected_out = sum(weights[i] * inputs[i] if weights[i] else -weights[i] * inputs[i] for i in range(8))
     
+    actual = twos_comp(int(str(dut.uo_out.value),2), 8)
+    
+    print(f"expected: {expected_out}, actual: {actual}")
+    
     # Check output
-    assert dut.uo_out.value == expected_out, f"Test failed: expected {expected_out}, got {dut.uo_out.value}"
+    assert actual == expected_out, f"Test failed: expected {expected_out}, got {dut.uo_out.value}"
 '''
 import cocotb
 from cocotb.clock import Clock
@@ -82,3 +93,4 @@ async def test_perceptron(dut):
     # Validate the result
     assert output == expected_output, f"Mismatch: expected {expected_output}, got {output}"
 
+'''
