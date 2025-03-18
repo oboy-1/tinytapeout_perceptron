@@ -16,7 +16,7 @@ module perceptron (
       end else begin
 	sum = 0; // Reset sum on each clock cycle
 	for (i = 0; i < 8; i++) begin
-	  if (weights[i]) begin
+		if (weights[i]) begin // test comment
 	    sum = sum + inputs[i];
           end else begin
 	    sum = sum - inputs[i];
