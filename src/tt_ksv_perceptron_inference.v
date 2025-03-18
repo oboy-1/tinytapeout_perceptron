@@ -21,7 +21,7 @@ module tt_ksv_perceptron_inference #( parameter MAX_COUNT = 24'd10_000_000 ) (
 
     // ui_in is weights, uio_in is inputs, uo_out is output
 
-    perceptron p1 (
+    ternary_perceptron p1 (
       .weights(ui_in),
       .inputs(uio_in),
       .out(perceptron_out),
