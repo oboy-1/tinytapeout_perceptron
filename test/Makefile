@@ -9,7 +9,7 @@ TOPLEVEL_LANG ?= verilog
 ifneq ($(GATES),yes)
 
 # this is the only part you should need to modify:
-VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/../src/tt_ksv_perceptron_inference.v $(PWD)/../src/perceptron.v
+VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/../src/tt_ksv_perceptron_inference.v $(PWD)/../src/ternary_perceptron.v
 
 else
 
