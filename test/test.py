@@ -11,9 +11,17 @@ def twos_comp(val, bits):
         val = val - (1 << bits)        # compute negative value
     return val                         # return positive value as is
 
+def int_to_crumb(num):
+    """Map {-1, 0, 1} to {11, 00, 01}"""
+    if num == -1:
+        return "11"
+    elif num == 1:
+        return "01"
+    return "00"
+
 @cocotb.test()
 async def test_perceptron(dut):
-    """Test the perceptron module."""
+    """Test the (ternarized) perceptron module."""
     
     print("Available signals:", dir(dut))
 
@@ -31,20 +39,19 @@ async def test_perceptron(dut):
     dut.rst_n.value = 1
 
     # Generate random test data
-    weights = [random.randint(0, 1) for _ in range(8)]
+    weights = [random.randint(0, 2) - 1 for _ in range(8)]
     inputs = [random.randint(0, 1) for _ in range(8)]
     
     # Convert lists to binary format
-    dut.ui_in.value = int("".join(map(str, weights)), 2)
+    dut.ui_in.value = int("".join(map(int_to_crumb, weights)), 2)
     dut.uio_in.value = int("".join(map(str, inputs)), 2)
     
     # Wait for one clock cycle to see the output values
     await ClockCycles(dut.clk, 10)
     
     # Compute expected output manually
-    weights = [-1 if x == 0 else x for x in weights]
     print(f"weights: {weights}, inputs: {inputs}")
-    expected_out = sum(weights[i] * inputs[i] if weights[i] else -weights[i] * inputs[i] for i in range(8))
+    expected_out = sum(weights[i] * inputs[i] for i in range(8))
     
     actual = twos_comp(int(str(dut.uo_out.value),2), 8)
     
