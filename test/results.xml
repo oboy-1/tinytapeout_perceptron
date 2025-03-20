@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1742320940" />
-    <testcase name="test_perceptron" classname="test" file="/Users/ksv/Development/ML/tinytapeout_perceptron/test/test.py" lineno="14" time="0.0016219615936279297" sim_time_ns="190000.001" ratio_time="117142108.51011376" />
+    <property name="random_seed" value="1742494732" />
+    <testcase name="test_perceptron" classname="test" file="/Users/ksv/Development/ML/tinytapeout_perceptron/test/test.py" lineno="14" time="0.0014679431915283203" sim_time_ns="190000.001" ratio_time="129432802.37035958" />
   </testsuite>
 </testsuites>
