@@ -23,7 +23,7 @@ module perceptron (
       	    default: ; // 00 || 10 -> 0 (pass)
       	  endcase
         end
-      	out <= sum; // Automatic zero padding takes care of the 4 left bits
+        out[3:0] <= sum; // Zero-pad positives, lowest: -4 > 1100
       end
     end
 
