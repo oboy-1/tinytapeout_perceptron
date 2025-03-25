@@ -52,7 +52,7 @@ async def test_perceptron(dut):
     print(f"weights: {weights}, inputs: {inputs}")
     expected_out = sum(weights[i] * inputs[i] for i in range(4))
     
-    actual = twos_comp(int(str(dut.uo_out.value),2), 8)
+    actual = twos_comp(int(str(dut.uo_out.value)[4:8],2), 4)
     
     print(f"expected: {expected_out}, actual: {actual}")
     
