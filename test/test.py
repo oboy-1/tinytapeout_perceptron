@@ -39,19 +39,18 @@ async def test_perceptron(dut):
     dut.rst_n.value = 1
 
     # Generate random test data
-    weights = [random.randint(0, 2) - 1 for _ in range(8)]
-    inputs = [random.randint(0, 1) for _ in range(8)]
+    weights = [random.randint(0, 2) - 1 for _ in range(4)]
+    inputs = [random.randint(0, 1) for _ in range(4)]
     
-    # Convert lists to binary format
-    dut.ui_in.value = int("".join(map(int_to_crumb, weights)), 2)
-    dut.uio_in.value = int("".join(map(str, inputs)), 2)
+    dut.ui_in.value = int("".join(map(int_to_crumb, weights)), 2) # Concat crumbs
+    dut.uio_in.value = int("".join(map(str, inputs)), 2) # Concat inputs
     
     # Wait for one clock cycle to see the output values
     await ClockCycles(dut.clk, 10)
     
     # Compute expected output manually
     print(f"weights: {weights}, inputs: {inputs}")
-    expected_out = sum(weights[i] * inputs[i] for i in range(8))
+    expected_out = sum(weights[i] * inputs[i] for i in range(4))
     
     actual = twos_comp(int(str(dut.uo_out.value),2), 8)
     
