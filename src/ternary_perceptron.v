@@ -1,6 +1,6 @@
 module perceptron (
-  input wire [7:0] weights, // but only use [3:0]
-  input wire [7:0] inputs,
+  input wire [7:0] weights,
+  input wire [7:0] inputs, // but only read [3:0]
   output reg [7:0] out, // but only write to [3:0]
   
   input wire       clk,
@@ -9,6 +9,7 @@ module perceptron (
 
     integer i;
     reg signed [3:0] sum;  // Temporary accumulation register
+    reg [1:0] crumb; // Temporary crumb variable
 
     always @(posedge clk) begin
       if (reset) begin
@@ -16,7 +17,7 @@ module perceptron (
       end else begin
       	sum = 0; // Reset sum on each clock cycle
         for (i = 0; i < 4; i = i + 1) begin // Read every two bits as one of three options
-          crumb = {2 * i + 1, 2 * i};
+          crumb = {2 * i, 2 * i + 1};
       	  case(crumb)
       	    2'b01: sum = sum + inputs[i]; // 01 -> +1
       	    2'b11: sum = sum - inputs[i]; // 11 -> -1
