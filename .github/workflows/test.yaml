@@ -8,11 +8,11 @@ jobs:
     steps:
     # need the repo checked out
     - name: checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # install oss fpga tools
     - name: install oss-cad-suite
-      uses: YosysHQ/setup-oss-cad-suite@v2
+      uses: YosysHQ/setup-oss-cad-suite@v3
       with:
           python-override: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,7 +32,7 @@ jobs:
 
     - name: upload vcd
       if: success() || failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: test-vcd
           path: src/tb.vcd
